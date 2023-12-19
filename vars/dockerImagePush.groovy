@@ -8,13 +8,14 @@
         echo "#######Clearing Docker Image Post image push ##########"
         docker image rm ${image_name}:${image_tag}
         docker image rm ${image_name}:latest
+        aws ecr get-login-password --region ${region} | docker login --username Surya --password-stdin ${awsaccid}.dkr.ecr.${region}.amazonaws.com
     """
 }*/
 
 def call(String awsaccid, String region, String reponame)
 {
        sh """
-              aws ecr get-login-password --region ${region} | docker login --username Surya --password-stdin ${awsaccid}.dkr.ecr.${region}.amazonaws.com
+              aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin 639323015973.dkr.ecr.ap-southeast-2.amazonaws.com
               docker push ${awsaccid}.dkr.ecr.${region}.amazonaws.com/${reponame}:latest
               
        """
